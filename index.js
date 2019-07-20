@@ -46,7 +46,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(
   response => {
-    if (response.request.config.headers.loading !== 'false') {
+    if (response.config.headers.loading !== 'false') {
       Loading.hide()
     }
     return response.data
