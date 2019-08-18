@@ -38,7 +38,7 @@ let onRequestHandler = config => {}
 
 axios.interceptors.request.use(config => {
   if (config.headers.loading !== 'false') {
-    Loading.show()
+    config.headers.loadingId = Loading.show()
   }
   onRequestHandler && onRequestHandler(config)
   return config
@@ -47,13 +47,13 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(
   response => {
     if (response.config.headers.loading !== 'false') {
-      Loading.hide()
+      Loading.hide(response.config.headers.loadingId)
     }
     return response.data
   },
   error => {
     if (error.config.headers.loading !== 'false') {
-      Loading.hide()
+      Loading.hide(error.config.headers.loadingId)
     }
     if (isCustomCatch(error)) {
       // 用户希望自己处理异常
