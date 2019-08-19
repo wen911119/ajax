@@ -77,6 +77,6 @@ export const setDefaultErrorHander = function(handler) {
 export const setLoadingMethod = function(loadingMethod) {
   Loading = loadingMethod;
 };
-export const setOnRequestHandler = function() {
+export const setOnRequestHandler = function(handler) {
   onRequestHandler = handler;
 };
