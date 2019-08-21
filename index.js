@@ -1,19 +1,19 @@
 import axios from "axios";
 
-const isCustomCatch = function(error) {
-  const catchConfig = error.config.headers.catch;
+var isCustomCatch = function(error) {
+  var catchConfig = error.config.headers.catch;
   if (catchConfig) {
     if (catchConfig === "all") {
       return true;
     } else {
-      const status = error.response && error.response.status;
+      var status = error.response && error.response.status;
       if (status) {
-        const needCatchedStatusCodes = catchConfig
+        var needCatchedStatusCodes = catchConfig
           .split(",")
           .map(function(statusCodeStr) {
             return parseInt(statusCodeStr);
           });
-        if (needCatchedStatusCodes.includes(status)) {
+        if (needCatchedStatusCodes.indexOf(status) > -1) {
           return true;
         }
       }
@@ -22,12 +22,12 @@ const isCustomCatch = function(error) {
   return false;
 };
 
-let defaultErrorHandler = function(error) {
+var defaultErrorHandler = function(error) {
   console.warn("需要自定义错误处理函数");
   console.log(error);
 };
 
-let Loading = {
+var Loading = {
   show: function() {
     console.warn("需要自定义loading.show方法");
   },
@@ -36,7 +36,7 @@ let Loading = {
   }
 };
 
-let onRequestHandler = function(config) {};
+var onRequestHandler = function(config) {};
 
 axios.interceptors.request.use(function(config) {
   if (config.headers.loading !== "false") {
@@ -71,12 +71,12 @@ axios.interceptors.response.use(
 
 export default axios;
 
-export const setDefaultErrorHander = function(handler) {
+export var setDefaultErrorHander = function(handler) {
   defaultErrorHandler = handler;
 };
-export const setLoadingMethod = function(loadingMethod) {
+export var setLoadingMethod = function(loadingMethod) {
   Loading = loadingMethod;
 };
-export const setOnRequestHandler = function(handler) {
+export var setOnRequestHandler = function(handler) {
   onRequestHandler = handler;
 };
