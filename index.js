@@ -37,6 +37,7 @@ var Loading = {
 };
 
 var onRequestHandler = function(config) {};
+var onResponseHandler = function(response) {};
 
 axios.interceptors.request.use(function(config) {
   if (config.headers.loading !== "false") {
@@ -51,6 +52,7 @@ axios.interceptors.response.use(
     if (response.config.headers.loading !== "false") {
       Loading.hide(response.config.headers.loadingId);
     }
+    onResponseHandler && onResponseHandler(response);
     return response.data;
   },
   function(error) {
@@ -79,4 +81,7 @@ export var setLoadingMethod = function(loadingMethod) {
 };
 export var setOnRequestHandler = function(handler) {
   onRequestHandler = handler;
+};
+export var setOnResponseHandler = function(handler) {
+  onResponseHandler = handler;
 };
